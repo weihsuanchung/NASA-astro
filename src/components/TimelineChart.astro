@@ -1,0 +1,56 @@
+---
+import type { Milestone } from '../data/schedule';
+const { items } = Astro.props as { items: Milestone[] };
+const points = items
+  .slice()
+  .sort((a,b)=> new Date(a.date).getTime()-new Date(b.date).getTime())
+  .map(m => ({ x: new Date(m.date), y: 0, label: `${m.titleZh} / ${m.titleEn}`, type: m.type }));
+---
+<div class="w-full h-[360px] max-w-4xl mx-auto">
+  <canvas id="timelineChart"></canvas>
+</div>
+
+<script is:inline>
+  const raw = JSON.parse(decodeURIComponent(`{${'{'}}"pts"{${'}'}}:${encodeURIComponent(JSON.stringify(points))}}`)).pts;
+
+  // wait Chart.js load (included in Base.astro)
+  const wait = () => new Promise(r => {
+    if (window.Chart) return r(true);
+    const i = setInterval(()=>{ if (window.Chart) { clearInterval(i); r(true);} }, 50);
+  });
+
+  (async () => {
+    await wait();
+    const el = document.getElementById('timelineChart');
+    const data = raw;
+
+    const chart = new window.Chart(el.getContext('2d'), {
+      type: 'scatter',
+      data: { datasets: [{ data, pointRadius: 8, pointHoverRadius: 12, backgroundColor: '#67e8f9', borderColor: '#06b6d4' }]},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: { type: 'time', time: { unit: 'week' }, ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+          y: { display: false, min: -1, max: 1 }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => `${ctx.raw.label}（${ctx.raw.type}）` } }
+        }
+      },
+      plugins: [{
+        id: 'hline',
+        afterDraw: (chart) => {
+          const y = chart.scales.y.getPixelForValue(0);
+          const c = chart.ctx; c.save(); c.strokeStyle = '#475569'; c.lineWidth = 2; c.beginPath();
+          c.moveTo(chart.chartArea.left, y); c.lineTo(chart.chartArea.right, y); c.stroke();
+          chart.getDatasetMeta(0).data.forEach((pt,i) => {
+            c.fillStyle = '#94a3b8'; c.textAlign = 'center';
+            c.fillText(data[i].label, pt.x, pt.y - 14);
+          });
+          c.restore();
+        }
+      }]
+    });
+  })();
+</script>

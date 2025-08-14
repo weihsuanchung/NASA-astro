@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="NASA Space Apps｜隊內新手作戰指南">
+  <section id="onboarding">
+    <h1 class="text-4xl font-extrabold text-white text-center">第一次參加？接下來要幹嘛</h1>
+    <p class="mt-4 text-center text-slate-400 max-w-3xl mx-auto">
+      Space Apps 是 48 小時黑客松：用 NASA 開放資料快速做出可展示的原型（Demo/MVP），並清楚說明你解決了什麼問題、如何驗證。
+    </p>
+    <div class="mt-10 grid md:grid-cols-3 gap-6">
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">A. 賽前（8–9 月）</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>決定題目範圍（資料來源、使用者、Demo 形式）。</li>
+          <li>建立 Repo／資料夾／通訊群組。</li>
+          <li>打樣關鍵技術（地圖、視覺化、模型或遊戲）。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">B. 現場（10/4–10/5）</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>鎖定 MVP：1 個可運作情境。</li>
+          <li>補齊 README、重現步驟、資料引用。</li>
+          <li>準備 90 秒 Demo 錄影與簡報。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">C. 交付與後續</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>依賽區規定上傳（GitHub/提交表單）。</li>
+          <li>評審 Q&A、地方評審 → 全球提名。</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-3 text-center">※ 具體日期以官方公告為準。</p>
+  </section>
+
+  <section id="roles" class="py-16">
+    <h2 class="text-3xl font-bold text-white text-center">分工與交付</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">典型分工</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>PM／Pitch：時間軸、評審對焦、90 秒腳本。</li>
+          <li>資料工程：蒐集、清理、引用、再現。</li>
+          <li>前端/視覺化：互動網頁、地圖、圖表。</li>
+          <li>演算法/模擬：ML/模型/遊戲/物理規劃。</li>
+          <li>設計/內容：故事線、圖文、無障礙。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">交付清單（建議）</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>GitHub Repo（README 含重現步驟與授權）。</li>
+          <li>Demo 網站／執行影片（90 秒）。</li>
+          <li>資料來源與引用（含 DOI/連結）。</li>
+          <li>簡報（5–7 張，故事線清楚）。</li>
+          <li>已知限制與下一步（誠實揭露）。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="pitch" class="py-16">
+    <h2 class="text-3xl font-bold text-white text-center">Pitch 重點（90 秒）</h2>
+    <ol class="mt-6 max-w-3xl mx-auto list-decimal ml-6 space-y-2 text-slate-300">
+      <li>痛點＆使用情境</li><li>資料來源與驗證</li><li>核心 Demo（1–2 個互動）</li>
+      <li>技術亮點（ML/視覺化/模擬/地圖）</li><li>影響力與延展性</li>
+      <li>重現性（README/開源/限制）</li><li>下一步</li>
+    </ol>
+  </section>
+
+  <section id="resources" class="py-16">
+    <h2 class="text-3xl font-bold text-white text-center">資料與工具</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">資料</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li><a class="text-cyan-300 underline" href="https://www.spaceappschallenge.org/" target="_blank">Space Apps 官網</a></li>
+          <li><a class="text-cyan-300 underline" href="https://earthdata.nasa.gov/" target="_blank">NASA Earthdata</a></li>
+          <li><a class="text-cyan-300 underline" href="https://science.nasa.gov/" target="_blank">NASA Science</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="text-xl font-bold text-white">工具</h3>
+        <ul class="list-disc ml-5 mt-3 text-slate-300 space-y-2">
+          <li>地圖/視覺化：Leaflet / MapLibre / Kepler.gl / Chart.js</li>
+          <li>前端：Astro / React / Vite / Tailwind CSS</li>
+          <li>ML：Python（PyTorch/TF）／Colab</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

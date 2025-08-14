@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import { CHALLENGES } from '../data/challenges';
+
+const years = Array.from(new Set(CHALLENGES.map(c => c.year))).sort((a,b)=>b-a);
+const domains = ['地球科學','天文','地質','生活/教育'];
+const deliveries = ['互動式網頁','資料視覺化','小遊戲','機器學習','故事/教育資源','3D/地圖','模擬/規劃'];
+---
+<Base title="題目索引（2024/2023）｜NASA Space Apps">
+  <h1 class="text-3xl font-bold text-white text-center">題目索引（去年 / 前年）</h1>
+  <p class="text-center text-slate-400 mt-2">用年份、領域與交付型態快速篩選；每張卡片直連官方頁。</p>
+
+  <div class="mt-6 flex flex-wrap items-center gap-2">
+    <span class="chip"><b class="text-cyan-300">年份</b>
+      {years.map(y => <label class="ml-2"><input type="checkbox" class="filter-year" value={y} checked /> {y}</label>)}
+    </span>
+    <span class="chip"><b class="text-cyan-300">領域</b>
+      <select id="filter-domain" class="bg-slate-900 border border-slate-700 rounded px-2 py-1">
+        <option value="">全部</option>
+        {domains.map(d => <option>{d}</option>)}
+      </select>
+    </span>
+    <span class="chip"><b class="text-cyan-300">交付</b>
+      <select id="filter-delivery" class="bg-slate-900 border border-slate-700 rounded px-2 py-1">
+        <option value="">全部</option>
+        {deliveries.map(d => <option>{d}</option>)}
+      </select>
+    </span>
+    <span class="chip"><b class="text-cyan-300">關鍵字</b>
+      <input id="filter-q" class="bg-slate-900 border border-slate-700 rounded px-2 py-1" placeholder="如: exoplanet / map / AI" />
+    </span>
+  </div>
+
+  <div id="challenge-list" class="mt-6 grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+    {CHALLENGES.map(c => (
+      <a
+        href={c.url}
+        target="_blank"
+        class="card block"
+        data-year={String(c.year)}
+        data-domain={c.domain.join('|')}
+        data-delivery={c.delivery.join('|')}
+        data-text={(c.title + c.domain.join('') + c.delivery.join('')).toLowerCase()}
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-sm text-slate-400">{c.year}｜{c.domain.join(' · ')}</div>
+            <h3 class="text-lg font-bold text-white mt-1">{c.title}</h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+              {c.delivery.map(d => <span class="chip">{d}</span>)}
+            </div>
+          </div>
+          <span class="text-cyan-300 text-sm">官方頁面 ↗</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <script is:inline>
+    function applyFilters(){
+      const years=[...document.querySelectorAll('.filter-year:checked')].map(x=>x.value);
+      const domain=document.getElementById('filter-domain').value;
+      const delivery=document.getElementById('filter-delivery').value;
+      const q=(document.getElementById('filter-q').value||'').toLowerCase();
+
+      document.querySelectorAll('#challenge-list > a').forEach(card=>{
+        const okYear    = years.includes(card.dataset.year);
+        const okDomain  = !domain   || card.dataset.domain.split('|').includes(domain);
+        const okDeliver = !delivery || card.dataset.delivery.split('|').includes(delivery);
+        const okQ       = card.dataset.text.includes(q);
+        card.style.display = (okYear && okDomain && okDeliver && okQ) ? '' : 'none';
+      });
+    }
+    document.addEventListener('change', applyFilters);
+    document.getElementById('filter-q').addEventListener('input', applyFilters);
+    applyFilters();
+  </script>
+</Base>

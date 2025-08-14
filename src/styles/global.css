@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --card: #1e293b;      /* slate-800 */
+  --card-border: #334155; /* slate-700 */
+}
+
+body { @apply bg-[color:var(--slatebg)] text-slate-300 antialiased; }
+.nav-link { @apply transition-colors border-b-2 border-transparent; }
+.nav-link.active { @apply text-cyan-300 border-cyan-300; }
+.card { @apply rounded border p-6; background: var(--card); border-color: var(--card-border); }
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,.2), 0 4px 6px -2px rgba(0,0,0,.1); }
+.chip { @apply inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs; background:#0b1220; border-color: var(--card-border); }
